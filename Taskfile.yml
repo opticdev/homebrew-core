@@ -29,9 +29,9 @@ tasks:
   get-stats:
     desc: "[DIAG] show the current version of Optic CLI"
     cmds:
-      - "echo \"Version      : {{.VERSION}} \""
-      - "echo \"SHA256       : {{.SHASUM}} \""
-      - "echo \"URL          : {{.URL}} \""
+      - 'echo "Version      : {{.VERSION}}"'
+      - 'echo "SHA256       : {{.SHASUM}}"'
+      - 'echo "URL          : {{.URL}}"'
     silent: true
 
   generate-formula:
