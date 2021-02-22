@@ -1,0 +1,31 @@
+# Updates a Formula
+# Triggers on Repository Dispatch
+# Hosts the Formula on github-actions and on master
+
+on: 
+  repository_dispatch: # https://github.com/peter-evans/repository-dispatch#readme
+    types: [version-update]
+  workflow_dispatch:
+
+env: 
+  packageName: "@useoptic/cli"
+  exportName: api
+  cleanedPkgName: useopticcli # just remove all special characters and make lowercase (no @s or /s)
+
+jobs:
+  update-formula:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
+        with:
+          ref: main
+      - uses: actions/setup-node@c46424eee26de4078d34105d3de3cc4992202b1e # v 2.1.4
+        with:
+          node-version: 14
+      - run: brew install go-task/tap/go-task
+      - run: task build # Build includes a local commit to run test, and we can push in the next step
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: main
