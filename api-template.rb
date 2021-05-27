@@ -11,7 +11,9 @@ class Api < Formula
     url :stable
   end
 
-  depends_on "node@14"
+  @node_version = "node@14"
+
+  depends_on @node_version
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
@@ -19,7 +21,7 @@ class Api < Formula
     # Set shebang to Homebrew cellar
     bin_location = "#{libexec}/bin/api"
     lines = IO.readlines(bin_location)
-    lines[0] = "#!#{HOMEBREW_PREFIX}/opt/node/bin/node"
+    lines[0] = "#!#{HOMEBREW_PREFIX}/opt/#@node_version/bin/node"
 
     File.open(bin_location, "w") do |file|
       file.puts lines
