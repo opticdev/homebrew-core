@@ -19,7 +19,7 @@ class Api < Formula
     # Set shebang to Homebrew cellar
     bin_location = "#{libexec}/bin/api"
     lines = IO.readlines(bin_location)
-    lines[0] = "#!#{HOMEBREW_PREFIX}/opt/node/bin/node"
+    lines[0] = "#!#{HOMEBREW_PREFIX}/opt/#@node_version/bin/node"
 
     File.open(bin_location, "w") do |file|
       file.puts lines
